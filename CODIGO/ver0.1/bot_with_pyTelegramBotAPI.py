@@ -12,7 +12,19 @@ bot = telebot.TeleBot(os.getenv("KEY_BOT_TELEGRAM"))
 #*************FUNCIONES DE LAS LLAMADAS DE LOS BOTONES....*******************
 def buscar_referencia(message):
     ref = message.text 
-    print(f"Busacndo referencia {ref}")
+    print (ref , len(ref))
+    print(ref.isdigit())
+    
+    if  ref.isdigit() and len(ref) == 10 :
+        #Respuesta ok, tenemos la ref del producto....
+        print(f"Buscando referencia {ref}")     
+        #Ahora debemos empezar el proceso de scraping...
+        
+    else:
+        #Debemos chequer que la respuesta sea correcta, numerica y maximo 10 nº
+        bot.send_message(message.chat.id, 'El formato no es correcto, debe ser numerico, 10 digitos¡¡¡¡')
+        respuesta = bot.send_message(message.chat.id, 'Por favor introduce la REFERNCIA a buscar. (###########)',parse_mode="Markdown")
+        bot.register_next_step_handler(respuesta,buscar_referencia)
 
 #Funcion start
 @bot.message_handler(commands=['start'])
@@ -20,13 +32,9 @@ def _start(message):
     msg = ("Hola " +str(message.chat.username))
     bot.send_message(message.chat.id,msg)    
  
-#Funcion Loro
-@bot.message_handler(func=lambda msg: True)
-def echo_all(message):
-    #1. Determinamos que buscar
-    bot.reply_to(message,message.text)
+
     
-   
+
 #funcion Buscar    
 @bot.message_handler(commands=['buscar'])
 def buscar(message):
@@ -50,11 +58,21 @@ def respuesta_boton(callback):
         #DETERMINAMOS EL BOTON PULSADO...
         if callback.data == 'buscar_ref':
             # 1.Preguntamos ref a buscar, chequeamos respuesta correcta, y mandamos a funcion para buscar ref...
-            #Debemos chequer que la respuesta sea correcta, numerica y maximo 11 nº
-            respuesta = bot.send_message(callback.message.chat.id, 'Por favor introduce la REFERNCIA a buscar. (###.###.#####)',parse_mode="Markdown")
-            if type(respuesta) == int:
-                bot.register_next_step_handler(respuesta,buscar_referencia)
-            print("no es un texto")
+            respuesta = bot.send_message(callback.message.chat.id, 'Por favor introduce la REFERNCIA a buscar. (###########)',parse_mode="Markdown")
+            bot.register_next_step_handler(respuesta,buscar_referencia)
+            
+                
+                
+            
+ 
+            
+
+#Funcion Loro
+@bot.message_handler(func=lambda msg: True)
+def echo_all(message):
+    #1. Determinamos que buscar
+    bot.reply_to(message,message.text)
+
 bot.infinity_polling(
     #Reiniciar ante cambios
     restart_on_change=True,
