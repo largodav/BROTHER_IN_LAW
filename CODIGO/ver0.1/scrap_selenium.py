@@ -38,8 +38,40 @@ href_producto = WebDriverWait(driver,10).until(
 #TEnemos la URL del producto
 url_producto= href_producto[0].get_attribute("data-url")
 print(url_producto)
+driver.close()
 
+#TENEMOS URL DEL PRODUCTO ESPECIFICO, pero ¿tenemos que volvera repetir todo el proiceso????? USO DE SESIONES...
+driver = webdriver.Chrome()
+driver.get(url_producto)
+# # Esperamos a que aparezca el div d elas cookies
+div_cookies = WebDriverWait(driver, 20).until(
+    EC.presence_of_all_elements_located((By.ID, "onetrust-accept-btn-handler"))
+)
+div_cookies[0].click()
 
+#Obtenemos foto del producto, nombre completo y descripcion, ESTO ES LO QUE DEVOLVEMOS AL BOT...
+class_img_producto = WebDriverWait(driver,10).until(
+    EC.presence_of_all_elements_located((By.CLASS_NAME,"carousel-elements__item_img"))
+)
+imagen_producto = class_img_producto[0].get_attribute("src")
+print(f"Imagen del Producto: {imagen_producto}")
+
+class_nom_producto= WebDriverWait(driver,10).until(
+    EC.presence_of_all_elements_located((By.ID,"product_detail_title"))
+)
+print(f"Nombre del producto: {class_nom_producto[0].text}")
+
+#time.sleep(2005)
+#Buscamos el Click en "caracteristicas"
+caracteristicas = WebDriverWait(driver,20).until(
+    EC.presence_of_all_elements_located((By.CLASS_NAME,"extra-info__item"))
+)
+caracteristicas[0].click()
+
+class_descripcion_producto = WebDriverWait(driver,10).until(
+    EC.presence_of_all_elements_located((By.CLASS_NAME,"composition__value"))
+)
+print(f"Descripcion del producto: {class_descripcion_producto[0].text}")
 
 time.sleep(2005)
 
