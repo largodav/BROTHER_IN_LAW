@@ -3,7 +3,7 @@ from telebot import types
 import os
 # PAra cargar claves, etc...
 from dotenv import load_dotenv
-
+from scrap_selenium import buscar_por_ref
 load_dotenv()
 
 bot = telebot.TeleBot(os.getenv("KEY_BOT_TELEGRAM"))
@@ -14,12 +14,14 @@ def buscar_referencia(message):
     ref = message.text 
     print (ref , len(ref))
     print(ref.isdigit())
+    #Portatil pruebas 15215500693
     
-    if  ref.isdigit() and len(ref) == 10 :
+    if  ref.isdigit() and len(ref) == 11 :
         #Respuesta ok, tenemos la ref del producto....
         print(f"Buscando referencia {ref}")     
         #Ahora debemos empezar el proceso de scraping...
-        
+        imagen_producto ,nombre_producto, descripcion_producto =  buscar_por_ref(ref)
+        print(f"tenemos :\n Nombre del producto: {nombre_producto},\n Descripcion: {descripcion_producto},\n Imagen del producto:{imagen_producto}")
     else:
         #Debemos chequer que la respuesta sea correcta, numerica y maximo 10 nº
         bot.send_message(message.chat.id, 'El formato no es correcto, debe ser numerico, 10 digitos¡¡¡¡')
