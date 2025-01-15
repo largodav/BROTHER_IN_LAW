@@ -20,13 +20,14 @@ def buscar_referencia(message):
         #Respuesta ok, tenemos la ref del producto....
         print(f"Buscando referencia {ref}")     
         #Ahora debemos empezar el proceso de scraping...
-        imagen_producto ,nombre_producto, descripcion_producto =  buscar_por_ref(ref)
-        print(f"tenemos :\n Nombre del producto: {nombre_producto},\n Descripcion: {descripcion_producto},\n Imagen del producto:{imagen_producto}")
+        imagen_producto,nombre_producto,caracteristicas_producto=  buscar_por_ref(ref)
+        print(f"TENEMOS :\n Nombre del producto: {nombre_producto},\n Descripcion: {caracteristicas_producto},\n Imagen del producto:{imagen_producto}")
     else:
         #Debemos chequer que la respuesta sea correcta, numerica y maximo 10 nº
         bot.send_message(message.chat.id, 'El formato no es correcto, debe ser numerico, 10 digitos¡¡¡¡')
         respuesta = bot.send_message(message.chat.id, 'Por favor introduce la REFERNCIA a buscar. (###########)',parse_mode="Markdown")
         bot.register_next_step_handler(respuesta,buscar_referencia)
+#*****************************************************************************
 
 #Funcion start
 @bot.message_handler(commands=['start'])
@@ -63,17 +64,16 @@ def respuesta_boton(callback):
             respuesta = bot.send_message(callback.message.chat.id, 'Por favor introduce la REFERNCIA a buscar. (###########)',parse_mode="Markdown")
             bot.register_next_step_handler(respuesta,buscar_referencia)
             
-                
-                
-            
- 
-            
+                            
 
 #Funcion Loro
 @bot.message_handler(func=lambda msg: True)
 def echo_all(message):
     #1. Determinamos que buscar
     bot.reply_to(message,message.text)
+
+
+
 
 bot.infinity_polling(
     #Reiniciar ante cambios
