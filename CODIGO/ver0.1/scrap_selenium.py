@@ -90,14 +90,26 @@ def buscar_por_ref(referencia):
     caracteristicas_producto = class_descripcion_producto[0].text
     
     #DEBEMOS CERRAR VENTA DE CARACTERISTICAS
+    boton_cerrar_caracteristicas = WebDriverWait(driver,10).until(
+        EC.presence_of_all_elements_located((By.ID,"modal-close"))
+    )
+    #print(boton_cerrar_caracteristicas)
+    boton_cerrar_caracteristicas[0].click()
+    
     
     #CHEQUEAMOS EXISTENCIA TEORICA EN POZUELO
+    #UPPPPSSSSSSS, esta no carga, porque no carga la parte de "comprobar existencia"
     # class_disponibilidad = WebDriverWait(driver,10).until(
     #     EC.presence_of_all_elements_located((By.CLASS_NAME,"product_detail-aside--search_in_shop-text"))
     # )
-    # print(class_disponibilidad[0])
+    # #print(class_disponibilidad[0])
+    # class_disponibilidad[0].click()
     
-    #time.sleep(2005)
+    #Tenemos la URL del producto = url_producto
+    #Lo intentamos con beautifullSoup????
+    
+    
+    time.sleep(2005)
     
     #Cerrando el DRIVER
     driver.close()
