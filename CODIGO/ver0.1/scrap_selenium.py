@@ -106,10 +106,18 @@ class_disponibilidad[0].click()
 #Ya estamos en la sub pantalla de seleccionar provincia y tienda
 #listbox_9597a02c-d311-3e8f-83ab-8d31efe5b95a
 class_provincia = WebDriverWait(driver,10).until(
-    EC.presence_of_all_elements_located((By.CLASS_NAME,"dropdown-input"))
+    EC.presence_of_all_elements_located((By.ID,"dropdownFilterInput"))
 )
+time.sleep(10)
 print(class_provincia[0].text)
-
+# #class_provincia[0].click()
+# class_provincia[0].send_keys("MADRID")
+# print(class_provincia[0].text)
+# time.sleep(10)
+# boton_provincia = WebDriverWait(driver,10).until(
+#     EC.presence_of_all_elements_located((By.CLASS_NAME,"dropdown-icon"))
+# )
+# boton_provincia[0].click()
 time.sleep(5005)
 
 #Cerrando el DRIVER
