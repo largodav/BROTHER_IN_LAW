@@ -16,7 +16,7 @@ def buscar_por_ref(referencia):
     # driver = webdriver.Chrome()
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     #ESTO "OCULTA" LA VENTANA CHROME
-    #driver.minimize_window()
+    driver.minimize_window()
     # Mandamos el input a buscar, establecemos busqueda de prueba...
 
     #driver.get(f"https://www.elcorteingles.es/search-nwx/1/?s={referencia}&stype=text_box")
@@ -54,7 +54,7 @@ def buscar_por_ref(referencia):
     driver.set_window_size(1920,1080)
             
     #ESTO "OCULTA" LA VENTANA CHROME
-    #driver.minimize_window()
+    driver.minimize_window()
     driver.get(url_producto)
 
     # # Esperamos a que aparezca el div d elas cookies

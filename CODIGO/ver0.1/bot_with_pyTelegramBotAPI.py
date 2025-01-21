@@ -22,6 +22,11 @@ def buscar_referencia(message):
         #Ahora debemos empezar el proceso de scraping...
         imagen_producto,nombre_producto,caracteristicas_producto=  buscar_por_ref(ref)
         print(f"TENEMOS :\n Nombre del producto: {nombre_producto},\n Descripcion: {caracteristicas_producto},\n Imagen del producto:{imagen_producto}")
+        bot.send_message(message.chat.id, 'Este es tu producto: ')
+        bot.send_photo(message.chat.id,imagen_producto)
+        bot.send_message(message.chat.id,nombre_producto)
+        bot.send_message(message.chat.id,caracteristicas_producto)
+        
     else:
         #Debemos chequer que la respuesta sea correcta, numerica y maximo 10 nº
         bot.send_message(message.chat.id, 'El formato no es correcto, debe ser numerico, 10 digitos¡¡¡¡')
