@@ -15,13 +15,14 @@ import time
 def buscar_por_ref(referencia):
     # driver = webdriver.Chrome()
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    #ESTO "OCULTA" LA VENTANA CHROME
+    #ESTO "minimiza" LA VENTANA CHROME
     driver.minimize_window()
+    
     # Mandamos el input a buscar, establecemos busqueda de prueba...
 
-    #driver.get(f"https://www.elcorteingles.es/search-nwx/1/?s={referencia}&stype=text_box")
-    driver.get("https://www.elcorteingles.es/search-nwx/1/?s=15215500693&stype=text_box")
-    driver.implicitly_wait(10)
+    driver.get(f"https://www.elcorteingles.es/search-nwx/1/?s={referencia}&stype=text_box")
+    #driver.get("https://www.elcorteingles.es/search-nwx/1/?s=15215500693&stype=text_box")
+    driver.implicitly_wait(5)
     # time.sleep(35)
     # # Esperamos a que aparezca el div d elas cookies
     div_cookies = WebDriverWait(driver, 20).until(
@@ -80,7 +81,7 @@ def buscar_por_ref(referencia):
     caracteristicas = WebDriverWait(driver,20).until(     
         EC.presence_of_all_elements_located((By.CLASS_NAME,"pdp-list-item__text"))
     )
-
+    driver.implicitly_wait(5)
     #print(caracteristicas[0])
     caracteristicas[0].click()
     #caracteristicas[0].click()
@@ -88,7 +89,7 @@ def buscar_por_ref(referencia):
         EC.presence_of_all_elements_located((By.CLASS_NAME,"composition__value"))
     )
     caracteristicas_producto = class_descripcion_producto[0].text
-
+    driver.implicitly_wait(5)
     #Cerrando el DRIVER
     driver.close()
     #print(f"Descripcion del producto: {class_descripcion_producto[0].text}")
